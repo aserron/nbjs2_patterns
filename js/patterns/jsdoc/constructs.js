@@ -19,6 +19,9 @@ var Person = makeClass(
 /*
 * not even a clue of what Person is it.
 * 
+* This could override any class maker like Ext.define(CLASS LITERAL), 
+* because you can offer @extend info or other in the @constructs block.
+* 
 * Note that the literal inside the function is the key.
 * Lends is a powerfull tool that is informing that the next literal is the 
 * actual class agumentation or definition.
