@@ -1,7 +1,14 @@
-(function(){
-    module.Module = (function(){
+
+
     
-        /**
+/**
+     * @class Module
+     */
+module.Module = function(){
+    
+    /*
+     *
+     *
      * Lets define a set of private functions.
      * Either by named fn or variable assigment.
      * 
@@ -14,88 +21,125 @@
      * 
      * 3) Also, they should be CONTEXT AWARE, in this case, the module clousure.     * 
      */    
-        var _moduleFn2;
-    
-        function _moduleFn1(){
-            return []
-        }    
-        _moduleFn1.constructor;                      // FAIL: function taken as constructor of array
-        _moduleFn1().concat(value1, value2, valueN); // OK. Return type
-    
-    
-        function _moduleFn1b(){
-            var res;
-            res = [];
-            return res;
-        };
-    
-        _moduleFn1b;   // FAIL: No function type
-        _moduleFn1b(); // FAIL: No return type
-    
-        // note: 1b fail to even been tracked as fn, even less return type data.
-    
-        _moduleFn2 = function(arr, rx){
-            arr;// no info, no meta
-            var res = [];
-            return res;
-        }
-    
-        _moduleFn2.arity; // ok fn type detected.    
-        _moduleFn2(); // FAIL, No return type
-    
-        // Note: code complete show Fn2 as property, which is true if typed correctly.
-        // Note: Any of them is located inside the Module class context, IDE set them to global.
-    
-        return {
-            myInt     : 1,
-            myArr     :[], 
-            myStr     :"lorem",
-            myObj     :{
-                objp1  : undefined,
-                objp2  : ""
-            },
-    
-            myRx      : /\s+/,
-            myUnd     : undefined,
-            myNul     : null,
         
-            /**
-         * Fail: constructor not parsed, (as other module props.
+        
+    /**
+    * @type Function
+    */
+    var _moduleFn2;
+    
+    /**
+         * @namespace module.Module  
+         * @method          
+         * @return {Array} An array.
+         * @type Array
          */
-            constructor: function(){
-                this.coco = 1; // fail : coco hasn't been added as property
-            },
-            doSome   : function(){
-            ;
-            },
-            createArr   : function(){
-                return [];
-            },
-            getArr      : function(){
-                return _arr;
-            },
+    function _moduleFn1(){
+        return []
+    }    
+    // ERROR : _moduleFn1 seen as global.
+        
+    _moduleFn1.join(separator)  ; // FAIL : fn 
+    _moduleFn1().forEach(callback, thisObject); // OK : ide return array type
+    
+    
+    function _moduleFn1b(){
+        var res;
+        res = [];
+        return res;
+    };
+    
+    _moduleFn1b;   // FAIL: No function type
+    _moduleFn1b(); // FAIL: No return type
+    
+    // note: 1b fail to even been tracked as fn, even less return type data.
+    
+    /**
+         * @namespace module.Module
+         * @param {Array} arr
+         * @param {RegExp} rx
+         * @return {Array} An array.
+         * @type Array
+         */
+    _moduleFn2 = function(arr, rx){
+        arr;          // OK : IDE show array methods
+        rx.exec(str); // OK : IDE show rx methods and docs.
+        var res = [];
+        return res;
+    }
+    
+    _moduleFn2;   // OK : function type
+    _moduleFn2(); // FAIL, No return type
+    
+    // Note: code complete show Fn2 as property, which is true if typed correctly.
+    // Note: Any of them is located inside the Module class context, IDE set them to global.
+    
+    return /** @scope module.Module.prototype */{
+            
+        /**
+             * A Number.
+             * @type Number
+             */
+        myInt     : 1,
+        /**
+             * An Array.
+             * @type Array
+             */
+        myArr     : [], 
+        /**
+             * A String.
+             * @type String
+             */
+        myStr     :"lorem",
+        /**
+             * An Object.
+             * @internal Magic props?
+             * @property {Array} objep1 Test magic props.
+             * @property {Number} objep2 Another Test.
+             * @type Object
+             */
+        myObj     :{
+            objp1  : undefined,
+            objp2  : ""
+        },
+    
+        myRx      : /\s+/,
+        myUnd     : undefined,
+        myNul     : null,
+        
+        /**
+        * @constructor
+        */
+        constructor: function(){
+            this.coco = 1; // fail : coco hasn't been added as property
+        },
+        doSome   : function(){
+            this; // FAIL : scope is completly skiped
+        },
+        createArr   : function(){
+            return [];
+        },
+        getArr      : function(){
+            return _arr;
+        },
 
-            _innerWork  : function(){
-                this;               // FAIL: No Context, global = this.
-                this.getArr();      // FAIL: IDE doesn't get the type.
-                this.createArr();   // FAIL: IDE doesn't get the type.
+        _innerWork  : function(){
+            this;               // FAIL: No Context, global = this.
+            this.getArr();      // FAIL: IDE doesn't get the type.
+            this.createArr();   // FAIL: IDE doesn't get the type.
             
-            // No scope, all broken.
-            
-           
-            
-            }
+        // No scope, all broken.            
         }
-    }())
-    // ERROR: IDE doesn't show the exposed module (js1 did).
+    }
+}();
+// ERROR: IDE doesn't show the exposed module (js1 did).
+    
 
-
-    Module(); // ERROR: Module is inside module package. consturctor globally located.
-
-    module.Module;   // FAIL: Module is Object
-    module.Module(); // OK: module has Module class
+module.Module;   // FAIL: Module is Object
+module.Module(); // OK: found constructor!
 
 // ERROR: Module can't be seen by IDE as 
 
-}())
-// FAIL : Neither clousure could get info to the parser.
+
+
+
