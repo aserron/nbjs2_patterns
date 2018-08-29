@@ -1,6 +1,8 @@
-Netbeans Javascript Patterns Test.
+<qoute>This is kept for historical puroposes only, it was related to netbeans 6 javascript parsing engine migration</quote>
 
-This repo was created to help in the design of the new netbeans javascript editor.
+<h1>Netbeans Javascript Patterns Test.</h2>
+
+This repo was created to help in the design process of the new netbeans javascript editor.
 
 The patterns in part pure js, other part ExtJS specific where intented to help 
 the team to address problems like: 
