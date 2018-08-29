@@ -1,4 +1,4 @@
-<qoute>This is kept for historical puroposes only, it was related to netbeans 6 javascript parsing engine migration</quote>
+<qoute>This is kept for historical purposes only, it was related to netbeans 6 javascript parsing engine migration</quote>
 
 <h1>Netbeans Javascript Patterns Test.</h2>
 
